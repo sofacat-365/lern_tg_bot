@@ -16,7 +16,13 @@ async def command_roll(message: Message) -> None:
 
     parts = message.text.split()
 
+    if len(parts) > 2: # при написании более 1 аргумента
+        await message.answer("Эй, я одна не могу обработать столько всего! Один аргумент, пожалуйста...")
+
     if len(parts) > 1:
+        if not parts[1].isdigit():
+            await message.answer(f"'{parts[1]}' - это не число. Я не тупая!") # при написании текста
+            return
         try:
             max_value = int(parts[1])
             if max_value < 2:
