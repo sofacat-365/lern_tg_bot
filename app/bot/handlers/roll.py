@@ -11,15 +11,30 @@ router = Router()
 async def command_roll(message: Message) -> None:
     """Бросает число 1-100 и отвечает в зависимости от результата."""
     user_name = message.from_user.full_name
-    num = random.randint(1, 100)
+  
+    num = random.randint(1, max_value) # вместо 100 значение пользователя
+
+    parts = message.text.split()
+
+    if len(parts) > 1:
+        try:
+            max_value = int(parts[1])
+            if max_value < 2:
+                await message.answer("Я, конечно, не такая как остальные, но все равно, дай хотя бы 2...")
+                return
+        except ValueError:
+            await message.answer("Это не число... Ты ебушка?")
+            return
+    else:
+        max_value = 100 # по умолчанию
 
     if num == 13:
         result = f"Оу {num}... Откуды ты знаешь, что у меня др в этот день!"
-    elif num > 80:
+    elif num > max_value * 0.8:
         result = f"ОГО! {user_name}, тебе выпало {num}! Вселенная на твоей стороне!"
-    elif num > 50:
+    elif num > max_value * 0.5:
         result = f"Неплохо, {user_name}! {num} — среднячок, как и я..?"
-    elif num > 20:
+    elif num > max_value * 0.2:
         result = f"Всего {num}? Ну... бывало и лучше. Но я в тебя верю!"
     else:
         result = f"{num}... Это знак. Меня никто не любит. И тебя тоже, наверное... 😭"
