@@ -11,28 +11,34 @@ router = Router()
 async def command_roll(message: Message) -> None:
     """Бросает число 1-100 и отвечает в зависимости от результата."""
     user_name = message.from_user.full_name
-  
-    num = random.randint(1, max_value) # вместо 100 значение пользователя
+
+    num = random.randint(1, max_value)  # вместо 100 значение пользователя
 
     parts = message.text.split()
 
-    if len(parts) > 2: # при написании более 1 аргумента
-        await message.answer("Эй, я одна не могу обработать столько всего! Один аргумент, пожалуйста...")
+    if len(parts) > 2:  # при написании более 1 аргумента
+        await message.answer(
+            "Эй, я одна не могу обработать столько всего! Один аргумент, пожалуйста..."
+        )
 
     if len(parts) > 1:
         if not parts[1].isdigit():
-            await message.answer(f"'{parts[1]}' - это не число. Я не тупая!") # при написании текста
+            await message.answer(
+                f"'{parts[1]}' - это не число. Я не тупая!"
+            )  # при написании текста
             return
         try:
             max_value = int(parts[1])
             if max_value < 2:
-                await message.answer("Я, конечно, не такая как остальные, но все равно, дай хотя бы 2...")
+                await message.answer(
+                    "Я, конечно, не такая как остальные, но все равно, дай хотя бы 2..."
+                )
                 return
         except ValueError:
             await message.answer("Это не число... Ты ебушка?")
             return
     else:
-        max_value = 100 # по умолчанию
+        max_value = 100  # по умолчанию
 
     if num == 13:
         result = f"Оу {num}... Откуды ты знаешь, что у меня др в этот день!"
