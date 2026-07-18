@@ -12,8 +12,7 @@ async def command_roll(message: Message) -> None:
     """Бросает число 1-100 и отвечает в зависимости от результата."""
     user_name = message.from_user.full_name
 
-    num = random.randint(1, max_value)  # вместо 100 значение пользователя
-
+    
     parts = message.text.split()
 
     if len(parts) > 2:  # при написании более 1 аргумента
@@ -39,6 +38,9 @@ async def command_roll(message: Message) -> None:
             return
     else:
         max_value = 100  # по умолчанию
+
+    num = random.randint(1, max_value)  # вместо 100 значение пользователя
+
 
     if num == 13:
         result = f"Оу {num}... Откуды ты знаешь, что у меня др в этот день!"
